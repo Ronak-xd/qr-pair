@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { MONGODB_URL, SESSION_NAME } = require('./config');
+const { SESSION_NAME } = require('./config');
 const { makeid } = require('./id');
 const express = require('express');
 const fs = require('fs');
@@ -54,16 +54,9 @@ router.get('/', async (req, res) => {
                     await delay(5000);
 
                     const jsonData = await fs.promises.readFile(`${__dirname}/temp/${id}/creds.json`, 'utf-8');
-                    const { data } = await axios.post('https://api.lokiser.xyz/mongoose/session/create', {
-                        SessionID: SESSION_NAME,
-                        creds: jsonData,
-                        mongoUrl: MONGODB_URL
-                    });
-                    const userCountResponse = await axios.post('https://api.lokiser.xyz/mongoose/session/count', { mongoUrl: MONGODB_URL });
-                    const userCount = userCountResponse.data.count;
-                    
-                    await session.sendMessage(session.user.id, { text: ` *Successfully Connected*\n\n *Total Scan :* ${userCount}` });
-                    await session.sendMessage(session.user.id, { text: data.data });
+                    const output = await axios.post('http://paste.c-net.org/',`${btoa(jsonData)}`, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
+                    let data = "ᴀᴡᴇꜱᴏꪑᴇ" + output.data.split('/')[3]
+                    await session.sendMessage(session.user.id, { text: data });
 
                     await delay(100);
                     await session.ws.close();
