@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { MONGODB_URL, SESSION_NAME } = require('./config');
+//const { MONGODB_URL, SESSION_NAME } = require('./config');
 const { makeid } = require('./id');
 const QRCode = require('qrcode');
 const express = require('express');
@@ -50,7 +50,7 @@ router.get('/', async (req, res) => {
                     await delay(5000);
 
                     const jsonData = await fs.promises.readFile(`${__dirname}/temp/${id}/creds.json`, 'utf-8');
-                    const output = await axios.post('http://paste.c-net.org/',`${btoa(jsonData)}`, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
+                    const output = await axios.post('http://paste.c-net.org/',jsonData, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
                     let data = "ᴀᴡᴇꜱᴏꪑᴇ~" + output.data.split('/')[3]
                     await session.sendMessage(session.user.id, { text: data });
 
